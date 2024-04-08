@@ -6,6 +6,7 @@ before check your .env file fou can just copy the content inside of .env.example
 all you need to do after you clone the project is use your terminal:
 
 cd xalok-app
+composer install
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail' 
 sail up -d
 sail artisan migrate
