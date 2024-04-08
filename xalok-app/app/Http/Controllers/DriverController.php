@@ -30,26 +30,23 @@ class DriverController extends Controller
 
     public function getDrivers(Request $request)
     {
-        $fechaSeleccionada = $request->input('date');
+        $date = $request->input('date');
         $vehicleId = $request->input('vehicle_id');
         $vehicle = Vehicle::where('id', $vehicleId)->first();
-        // Obtener los IDs de los conductores que tienen un viaje agendado para la fecha seleccionada
-        $conductoresConViaje = Trip::where('date', $fechaSeleccionada)->pluck('driver_id');
+        // Get the IDs of the drivers who have a scheduled trip for the selected date
+        $driversWTrip = Trip::where('date', $date)->pluck('driver_id');
     
-        Log::debug("message");
-        Log::debug($conductoresConViaje);
-        // Obtener los conductores cuya licencia coincide con la requerida por el vehículo seleccionado
-        $conductoresConLicencia = Driver::where('licenseRequired', $vehicle->licenseRequired)->pluck('id');
-        Log::debug($conductoresConLicencia);
+        // Get the drivers whose license matches the one required by the selected vehicle.
+        $driversWLicense = Driver::where('licenseRequired', $vehicle->licenseRequired)->pluck('id');
+        Log::debug($driversWLicense);
     
-        // Obtener los conductores que no están en la lista de conductores con viaje agendado y tienen la licencia adecuada
-        $conductoresSinViajeYLicencia = Driver::whereNotIn('id', $conductoresConViaje)
-                                                ->whereIn('id', $conductoresConLicencia)
+        // Get the drivers who are not in the list of drivers with scheduled trips and have the appropriate license.
+        $driversWLicenseWoTrips = Driver::whereNotIn('id', $driversWTrip)
+                                                ->whereIn('id', $driversWLicense)
                                                 ->get();
-Log::debug($conductoresSinViajeYLicencia);
     
-        // Devolver los conductores como respuesta
-        return response()->json($conductoresSinViajeYLicencia);
+        // return drivers as response
+        return response()->json($driversWLicenseWoTrips);
     }
 
     /**

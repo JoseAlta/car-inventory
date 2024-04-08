@@ -39,7 +39,7 @@
 										<th>Brand</th>
 										<th>Model</th>
 										<th>Plate</th>
-										<th>Licenserequired</th>
+										<th>License required</th>
 
                                         <th></th>
                                     </tr>
