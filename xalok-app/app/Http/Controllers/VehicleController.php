@@ -86,16 +86,13 @@ class VehicleController extends Controller
     {
         $date = $request->input('date');
 
-        $vehiculosConViaje = Trip::where('date', $date)->pluck('vehicle_id');
+        $vehiclesWTrip = Trip::where('date', $date)->pluck('vehicle_id');
 
         // Obtener los vehículos que NO están en la lista de vehículos con viaje agendado
-        $vehiculosSinViaje = Vehicle::whereNotIn('id', $vehiculosConViaje)->get();
+        $vehiclesWoTrip = Vehicle::whereNotIn('id', $vehiclesWTrip)->get();
     
         // Devolver los vehículos como respuesta
-        return response()->json($vehiculosSinViaje);
+        return response()->json($vehiclesWoTrip);
     
-        // Return the vehicles as a JSON response
-    
-        // Return the vehicles as a JSON response
     }
 }
