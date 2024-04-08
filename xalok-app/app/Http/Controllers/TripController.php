@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use App\Models\Trip;
 use App\Http\Requests\TripRequest;
+use App\Models\Vehicle;
 
 /**
  * Class TripController
@@ -16,10 +18,11 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trips = Trip::paginate();
-
-        return view('trip.index', compact('trips'))
-            ->with('i', (request()->input('page', 1) - 1) * $trips->perPage());
+        // $trips = Trip::paginate();
+        $trips = Trip::with('driver', 'vehicle')->get();
+        $trip = Trip::with('driver', 'vehicle')->get();
+        return view('trip.index', compact('trips','trip'))
+            ->with(5);
     }
 
     /**
@@ -28,7 +31,9 @@ class TripController extends Controller
     public function create()
     {
         $trip = new Trip();
-        return view('trip.create', compact('trip'));
+        $drivers = Driver::all();
+        $vehicles = Vehicle::all();
+        return view('trip.create', compact('trip','drivers','vehicles'));
     }
 
     /**

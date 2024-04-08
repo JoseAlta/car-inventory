@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Http\Requests\VehicleRequest;
+use App\Models\Trip;
+use Illuminate\Http\Request;
 
 /**
  * Class VehicleController
@@ -79,5 +81,21 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicles.index')
             ->with('success', 'Vehicle deleted successfully');
+    }
+    public function getVehicles(Request $request)
+    {
+        $date = $request->input('date');
+
+        $vehiculosConViaje = Trip::where('date', $date)->pluck('vehicle_id');
+
+        // Obtener los vehículos que NO están en la lista de vehículos con viaje agendado
+        $vehiculosSinViaje = Vehicle::whereNotIn('id', $vehiculosConViaje)->get();
+    
+        // Devolver los vehículos como respuesta
+        return response()->json($vehiculosSinViaje);
+    
+        // Return the vehicles as a JSON response
+    
+        // Return the vehicles as a JSON response
     }
 }
