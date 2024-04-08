@@ -21,16 +21,28 @@
                     <div class="card-body bg-white">
                         
                         <div class="form-group mb-2 mb20">
-                            <strong>Vehicle Id:</strong>
-                            {{ $trip->vehicle_id }}
+                            <strong>Vehicle brand:</strong>
+                            {{ $trip->vehicle->brand }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Driver Id:</strong>
-                            {{ $trip->driver_id }}
+                            <strong>Vehicle model:</strong>
+                            <a href="/vehicles/{{ $trip->vehicle->id }}">{{ $trip->vehicle->model }}</a>
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Driver name:</strong>
+                            <a href="/drivers/{{ $trip->driver->id }}">{{ $trip->driver->name }}</a>
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>License required:</strong>
+                            {{ $trip->driver->licenseRequired }}
                         </div>
                         <div class="form-group mb-2 mb20">
                             <strong>Date:</strong>
                             {{ $trip->date }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Created at:</strong>
+                            {{ $trip->created_at }}
                         </div>
 
                     </div>

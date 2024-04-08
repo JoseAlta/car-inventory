@@ -38,7 +38,7 @@
                                         
 										<th>Name</th>
 										<th>Surname</th>
-										<th>Licenserequired</th>
+										<th>License</th>
 
                                         <th></th>
                                     </tr>

@@ -33,7 +33,7 @@
                             {{ $vehicle->plate }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Licenserequired:</strong>
+                            <strong>License required:</strong>
                             {{ $vehicle->licenseRequired }}
                         </div>
 

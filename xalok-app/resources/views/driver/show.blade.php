@@ -29,7 +29,7 @@
                             {{ $driver->surname }}
                         </div>
                         <div class="form-group mb-2 mb20">
-                            <strong>Licenserequired:</strong>
+                            <strong>License:</strong>
                             {{ $driver->licenseRequired }}
                         </div>
 
