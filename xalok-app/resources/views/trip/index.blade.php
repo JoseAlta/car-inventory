@@ -34,22 +34,21 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
                                         
-										<th>Vehicle Id</th>
-										<th>Driver Id</th>
+										<th>Vehicle model</th>
+										<th>Driver</th>
 										<th>Date</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     @foreach ($trips as $trip)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
                                             
-											<td>{{ $trip->vehicle_id }}</td>
-											<td>{{ $trip->driver_id }}</td>
+											<td>{{ $trip->vehicle->model }}</td>
+											<td>{{ $trip->driver->name }}</td>
 											<td>{{ $trip->date }}</td>
 
                                             <td>
@@ -68,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $trips->links() !!}
+                {{-- {!! $trips->links() !!} --}}
             </div>
         </div>
     </div>

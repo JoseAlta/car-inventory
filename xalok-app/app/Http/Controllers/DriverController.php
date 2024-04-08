@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use App\Http\Requests\DriverRequest;
+use App\Models\Trip;
+use App\Models\Vehicle;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
+
 
 /**
  * Class DriverController
@@ -20,6 +26,30 @@ class DriverController extends Controller
 
         return view('driver.index', compact('drivers'))
             ->with('i', (request()->input('page', 1) - 1) * $drivers->perPage());
+    }
+
+    public function getDrivers(Request $request)
+    {
+        $fechaSeleccionada = $request->input('date');
+        $vehicleId = $request->input('vehicle_id');
+        $vehicle = Vehicle::where('id', $vehicleId)->first();
+        // Obtener los IDs de los conductores que tienen un viaje agendado para la fecha seleccionada
+        $conductoresConViaje = Trip::where('date', $fechaSeleccionada)->pluck('driver_id');
+    
+        Log::debug("message");
+        Log::debug($conductoresConViaje);
+        // Obtener los conductores cuya licencia coincide con la requerida por el vehículo seleccionado
+        $conductoresConLicencia = Driver::where('licenseRequired', $vehicle->licenseRequired)->pluck('id');
+        Log::debug($conductoresConLicencia);
+    
+        // Obtener los conductores que no están en la lista de conductores con viaje agendado y tienen la licencia adecuada
+        $conductoresSinViajeYLicencia = Driver::whereNotIn('id', $conductoresConViaje)
+                                                ->whereIn('id', $conductoresConLicencia)
+                                                ->get();
+Log::debug($conductoresSinViajeYLicencia);
+    
+        // Devolver los conductores como respuesta
+        return response()->json($conductoresSinViajeYLicencia);
     }
 
     /**
