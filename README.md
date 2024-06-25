@@ -1,5 +1,5 @@
-# xalok-app
-xalok app 
+# car inventory
+Car inventory app 
 This app is runing with docker it contains a project with laravel 11 , mysql, sail y redis
 
 ### INSTALL ###
